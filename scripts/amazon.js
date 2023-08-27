@@ -1,5 +1,6 @@
-import { products } from "../data/products";
-import { cart } from "../data/cart";
+import { products } from "../data/products.js";
+import { cart, addToCart } from "../data/cart.js";
+import {formatCurrency} from '../scripts/utils/money.js';
 
 let productsHTML = "";
 
@@ -24,7 +25,7 @@ products.forEach((product) => {
         </div>
 
         <div class="product-price">
-        $${(product.priceCents / 100).toFixed(2)} 
+        $${formatCurrency(product.priceCents)} 
         </div>
 
         <div class="product-quantity-container">
@@ -58,37 +59,18 @@ products.forEach((product) => {
   // console.log(product.name);
 });
 
+function updateCartQuantity() {
+  const cartQuantity = cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
+  document.querySelector('.js-cart-quantity')
+    .innerHTML = cartQuantity;
+}
+
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
     const productId = button.dataset.productId;
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    const quantitySelector = document.querySelector(
-      `.js-quantity-selector-${productId}`
-    );
-    
-    let itemQuantity = Number(quantitySelector.value);
-
-    if (matchingItem) {
-      matchingItem.quantity += itemQuantity;
-    } else {
-      cart.push({
-        productId: productId,
-        quantity: itemQuantity,
-      });
-    }
-
-    const cartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-
-    document.querySelector('.js-cart-quantity')
-      .innerHTML = cartQuantity;
+    addToCart(productId);
+    updateCartQuantity();    
   });
 });
