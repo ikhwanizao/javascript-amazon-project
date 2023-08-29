@@ -32,11 +32,11 @@ export function addToCart(productId) {
       }
   }
 
-export function removeFromCart(productId) {
+export function removeFromCart(productToDeleteId) {
   const newCart = [];
 
   cart.forEach((cartItem) => { 
-    if (cartItem.productId !== productId) {
+    if (cartItem.productId !== productToDeleteId) {
       newCart.push(cartItem);
     }
   });
