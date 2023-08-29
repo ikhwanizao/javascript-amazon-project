@@ -54,4 +54,5 @@ export function removeFromCart(productToDeleteId) {
 
   cart = newCart;
   saveToStorage();
+  // updateCartQuantity();
 }
