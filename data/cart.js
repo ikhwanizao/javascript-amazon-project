@@ -1,5 +1,10 @@
 export let cart = JSON.parse(localStorage.getItem("cart"));
 
+export function calculateCartQuantity() {
+  const cartQuantity = cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
+  return cartQuantity;
+}
+
 if (!cart) {
   cart = [
     {
