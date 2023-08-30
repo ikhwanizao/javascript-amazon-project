@@ -60,7 +60,6 @@ products.forEach((product) => {
 
 function updateCartQuantity() {
   const cartQuantity = calculateCartQuantity();
-  console.log(cartQuantity);
   document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
 }
